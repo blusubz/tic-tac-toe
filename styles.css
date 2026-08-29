@@ -9,4 +9,10 @@
 body {
     color: green;
     background-color: black;
+
+    /* Remove later */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
