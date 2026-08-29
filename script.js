@@ -1,7 +1,7 @@
-// Immedaite Invocked Function Expression (IIFEs)
-const gameboard = (() => {
-    // Creats fresh board
-    let board = ['1','2','3','4','5','6','7','8','9'];
+// Immediate Invoked Function Expression (IIFEs)
+const gameBoard = (() => {
+    // Creates fresh board
+    let board = ['','','','','','','','',''];
  
     const resetBoard = () =>  { 
         board = ['','','','','','','','',''];
@@ -26,6 +26,19 @@ function player(name, marker) {
     };
 };
 
+// print board to screen 
+const printBoard = () => {
+    // Fetch current state of the board 
+    let board = gameBoard.getBoard();
+
+    return board;
+}
+
+// Game Controller to handle player turns, reset game, win checks
+const gameController = () => {
+    return;
+}
+
 // Game flow Driver
 (() => {
     // Start game
@@ -33,9 +46,6 @@ function player(name, marker) {
     // Visual Board
     const visualBoard = "1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n";
     console.log(visualBoard);
-    console.log(gameboard.getBoard());
-    player('morris', 'X');
-    console.log(gameboard.getBoard());
 
     // I can update the visual board on screen which is a screen for every marker selected. Remember to create logic to not allow more than one marker be selected for a certain spot
 
