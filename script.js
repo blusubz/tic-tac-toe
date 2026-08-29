@@ -1,11 +1,7 @@
 // Immedaite Invocked Function Expression (IIFEs)
 const gameboard = (() => {
     // Creats fresh board
-    let board = [
-        ['','',''],
-        ['','',''],
-        ['','','']
-    ];
+    let board = ['','','','','','','','',''];
  
     const resetBoard = () =>  { 
         board = ['','','','','','','','',''];
@@ -35,6 +31,9 @@ function player(name, marker) {
 // Game flow Driver
 (() => {
     // Start game
+    // Visual Board
+    const visualBoard = "0|1|2\n-+-+-\n3|4|5\n-+-+-\n6|7|8\n";
+    console.log(visualBoard);
 
     // Game logic for play
 
