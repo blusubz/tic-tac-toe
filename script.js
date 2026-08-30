@@ -39,9 +39,19 @@ const printCurrentBoardState = () => {
 const gameController = () => {
     const totalMoves = 9;
     let currentMoves = 0;
-    const winningCoordinates = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+    const winningCoordinates = [
+        [0,1,2], // Row 0
+        [3,4,5], // Row 1 
+        [6,7,8], // Row 2
+        [0,3,6], // Row 3 - Col 0
+        [1,4,7], // Row 4 - Col 1
+        [2,5,8], // Row 5 - Col 2
+        [0,4,8], // Row 6 - Diagonal Top right down left
+        [2,4,6]  // Row 7 - Diagonal Top left down right
+    ];
     const markerX = 'X';
     const markerO = 'O';
+    let isWinner = false;
     let board = gameBoard.getBoard();
     let userChoice = 2;
 
@@ -51,11 +61,14 @@ const gameController = () => {
 
     // If total moves reached, then Game is tie
     // Maybe this code can go into a loop?
-    if (totalMoves > 9) {
+    if (currentMoves === totalMoves) {
         console.log('Game Tie!')
         console.log('Would you like to restart the game? y/n')
+        // if yes then reset board
+        // gameBoard.resetBoard();
     } else {
-        if (board[userChoice] === ' ') { // Logic to check if user choice is taken by oppenents marker
+        // Logic to check if user choice is taken by oppenents marker
+        if (board[userChoice] === ' ') { 
             gameBoard.setBoard(userChoice, markerX)
             currentMoves++;
 
@@ -65,9 +78,30 @@ const gameController = () => {
         } else {
             console.log('Spot taken. Please select another position choice.')
         } 
+
+        // Calculate winner
+        for (let i = 0; i < winningCoordinates.length; i++) {
+            let A = board[winningCoordinates[i][0]];
+            let B = board[winningCoordinates[i][1]];
+            let C = board[winningCoordinates[i][2]];
+
+            // 1. Is spot not empty
+            // 2. Does Maker A = Marker B = Marker C
+            // If yes then game won
+            if (A !== ' ' && A === B && B === C) {
+                console.log('You are the winner!');
+                return;
+            }
+        }
     }
 
-    // Calculate winner
+    function checkWinner(isWinner) {
+        if (isWinner) {
+            console.log(`Great you win!`)
+        } else {
+            console.log(`Sorry you loose.`);
+        }
+    }
 
     // Ask if to restart game or end game to end loop
 }
