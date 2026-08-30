@@ -1,10 +1,10 @@
 // Immediate Invoked Function Expression (IIFEs)
 const gameBoard = (() => {
     // Creates fresh board
-    let board = ['','','','','','','','',''];
+    let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
  
     const resetBoard = () =>  { 
-        board = ['','','','','','','','',''];
+        board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
     }
   
     const getBoard = () => board;
@@ -27,27 +27,26 @@ function player(name, marker) {
 };
 
 // print board to screen 
-const printBoard = () => {
+const printCurrentBoardState = () => {
     // Fetch current state of the board 
     let board = gameBoard.getBoard();
+    let row1 = `${board[0]} | ${board[1]} | ${board[2]}`;
+    let row2 = `${board[3]} | ${board[4]} | ${board[5]}`;
+    let row3 = `${board[6]} | ${board[7]} | ${board[8]}`
+    const subRow = '--+---+--';
 
-    return board;
+    // Print current board state
+    console.log(row1);
+    console.log(subRow);
+    console.log(row2);
+    console.log(subRow);
+    console.log(row3);
 }
 
 // Game Controller to handle player turns, reset game, win checks
 const gameController = () => {
-    return;
-}
-
-// Game flow Driver
-(() => {
-    // Start game
-    console.log('This is a visual representation of Tic-Tac-Toe board.\n\nPlease select your maker to use it.\n\nInput the digit where you would want to place your marker.')
-    // Visual Board
-    const visualBoard = "1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n";
-    console.log(visualBoard);
-
-    // I can update the visual board on screen which is a screen for every marker selected. Remember to create logic to not allow more than one marker be selected for a certain spot
+    const totalMoves = 9;
+    let currentMoves = 0;
 
     // Game logic for play
 
@@ -55,4 +54,24 @@ const gameController = () => {
 
     // Ask if to restart game or end game to end loop
     
+    return;
+}
+
+// Game flow Driver
+(() => {
+    // Start game instructions
+    console.log('This is a visual representation of Tic-Tac-Toe board.\n\nPlease select your maker to use it.\n\nInput the digit where you would want to place your marker.')
+
+    // Game Manual
+    const visualBoard = "1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n";
+    console.log(visualBoard);
+
+    // Display 
+    // Testing below
+    printCurrentBoardState();
+    gameBoard.setBoard(0, 'X')
+    gameBoard.setBoard(8, 'O')
+    printCurrentBoardState()
+
+    // Play game
 })();
