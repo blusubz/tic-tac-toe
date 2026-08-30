@@ -10,71 +10,67 @@ const gameBoard = (() => {
     const getBoard = () => board;
 
     const setBoard = (index, marker) => {
-        board[index - 1] = marker;
+        board[index] = marker;
     }
 
     return { resetBoard, getBoard, setBoard }
 })();
 
 // Player Factory Function
-function player(name, marker) {
-    let userChoice = "9"; // test choice
-    return {
-        name,
-        marker,
-        userChoice
-    };
-};
+// function player(name, marker) {
+//     let userChoice = "9"; // test choice
+//     return {
+//         name,
+//         marker,
+//         userChoice
+//     };
+// };
 
 // print board to screen 
-const printCurrentBoardState = () => {
-    // Fetch current state of the board 
-    let board = gameBoard.getBoard();
-    let row1 = `${board[1]} | ${board[2]} | ${board[3]}`;
-    let row2 = `${board[4]} | ${board[5]} | ${board[6]}`;
-    let row3 = `${board[7]} | ${board[8]} | ${board[9]}`
-    const subRow = '--+---+--';
+// const printCurrentBoardState = () => {
+//     // Fetch current state of the board 
+//     let board = gameBoard.getBoard();
+//     let row1 = `${board[0]} | ${board[1]} | ${board[2]}`;
+//     let row2 = `${board[3]} | ${board[4]} | ${board[5]}`;
+//     let row3 = `${board[6]} | ${board[7]} | ${board[8]}`
+//     const subRow = '--+---+--';
 
-    // Print current board state
-    console.log(row1);
-    console.log(subRow);
-    console.log(row2);
-    console.log(subRow);
-    console.log(row3);
-}
+//     // Print current board state
+//     console.log(row1);
+//     console.log(subRow);
+//     console.log(row2);
+//     console.log(subRow);
+//     console.log(row3);
+// }
 
 // Game Controller to handle player turns, reset game, win checks
 const gameController = () => {
     const totalMoves = 9;
     let currentMoves = 0;
 
-    // Logic to check if index is taken..
+    
     // Make a move
 
     // First check the board and see if the index desired is available 
-    let indexSet = 6;
-    let boardIndex = gameBoard.getBoard();
-    console.log(boardIndex)
-    // then check the userChoice vs board index
-    if (boardIndex[indexSet] === ' ') {
-        gameBoard.setBoard(indexSet, 'X')
+    let userChoice = 1;
+    userChoice--; // To allow user choice be digits 1-9, so we subtract 1 from user choice to index into board arr correctly 
+    let board = gameBoard.getBoard();
+
+    // Logic to check if user choice is taken by oppenents mark..
+    if (board[userChoice] === ' ') {
+        gameBoard.setBoard(userChoice, '?')
     } else {
-        console.log('SPOT TAKEN')
+        console.log('Spot taken. Please select another position choice.')
     } 
 
-    // if (board[index - 1] !== ' ') {
-    //         // board[index - 1] = marker;
-    //     } else {
-    //         console.log("Spot is already filled. Please try again with a new location.")
-    //         gameBoard.setBoard(0, 'X');
-    //     }
+    // After every move display board 
+    console.log(gameBoard.getBoard())
 
     // Game logic for play
 
     // Calculate winner
 
     // Ask if to restart game or end game to end loop
-
 }
 
 // Game flow Driver
@@ -83,7 +79,7 @@ const gameController = () => {
     console.log('This is a visual representation of Tic-Tac-Toe board.\n\nPlease select your maker to use it.\n\nInput the digit where you would want to place your marker.')
 
     // Game Manual
-    const visualBoard = "1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n"; // later do index - 1
+    const visualBoard = "\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n\n"; // later do index - 1
     console.log(visualBoard);
 
     // Display 
@@ -96,5 +92,3 @@ const gameController = () => {
     // Play game
     gameController();
 })();
-
- // LEFT OFF at Game Controller Logic
