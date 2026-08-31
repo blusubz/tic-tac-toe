@@ -17,14 +17,15 @@ const gameBoard = (() => {
 })();
 
 // Player Factory Function
-function player(name, marker) {
-    let userChoice = "9"; // test choice
-    return {
-        name,
-        marker,
-        userChoice
-    };
-};
+// function player(name, marker) {
+//     return {
+//         name,
+//         marker,
+//         userChoice
+//     };
+// };
+
+const player = (name, marker) => ({ name, marker })
 
 // Print current state of board to screen 
 const printCurrentBoardState = () => {
@@ -134,5 +135,5 @@ const gameController = (playerOne, playerTwo) => {
     // 2. call gameController.playTurn with player info to play turn
 
     // Play game
-    game.playTurn(8);
+    game.playTurn(1);
 })();
