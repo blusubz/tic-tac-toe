@@ -63,51 +63,50 @@ const gameController = () => {
     
     /* Game logic for play */
     // Create loop to let computer play on it's own
-    for (let i = 0; i <= totalMoves; i++) {
-        let computerChoice = Math.floor(Math.random() * 8) + 1;
+    while (currentMoves < totalMoves && !isWinner) {
+        let computerChoice = Math.floor(Math.random() * 9);
         
         const computer1 = 'X';
         const computer2 = 'O';
         // If total moves reached without winner, then Game is tie
-        if (currentMoves === totalMoves) {
-            checkWinner(isWinner);
-            console.log('Would you like to restart the game? y/n')
-            // if yes then reset board
-            // gameBoard.resetBoard();
-        } else {
-            // Logic to check if user choice is taken by oppenents marker
-            if (board[computerChoice] === ' ') { 
-                if (computerTurnSwtich % 2 === 0) {
-                    console.log('computer 1 turn')
-                    gameBoard.setBoard(computerChoice, computer1)
-                }  else {
-                    console.log('computer 2 turn')
-                    gameBoard.setBoard(computerChoice, computer2)
-                }
-                computerTurnSwtich++;
-                currentMoves++;
-
-                // After every move display board 
-                console.log(gameBoard.getBoard()) // remove this after
-                printCurrentBoardState()
-            } else {
-                console.log('Spot taken. Please select another position choice.');
-            } 
-
-            // Calculate winner
-            for (let i = 0; i < winningCoordinates.length; i++) {
-                let A = board[winningCoordinates[i][0]];
-                let B = board[winningCoordinates[i][1]];
-                let C = board[winningCoordinates[i][2]];
-
-                // 1. Is spot not empty
-                // 2. Does Maker A = Marker B = Marker C
-                // If yes then game won
-                if (A !== ' ' && A === B && B === C) {
-                    isWinner = true;
-                    checkWinner(isWinner);
-                }
+        
+        // Logic to check if user choice is taken by oppenents marker
+        if (board[computerChoice] === ' ') { 
+            if (computerTurnSwtich % 2 === 0) {
+                console.log('computer 1 turn')
+                gameBoard.setBoard(computerChoice, computer1)
+            }  else {
+                console.log('computer 2 turn')
+                gameBoard.setBoard(computerChoice, computer2)
             }
+            computerTurnSwtich++;
+            currentMoves++;
+            printCurrentBoardState();
+        } else {
+            console.log('Spot taken. Please select another position choice.');
+        } 
+
+        // Calculate winner
+        for (let i = 0; i < winningCoordinates.length; i++) {
+            let A = board[winningCoordinates[i][0]];
+            let B = board[winningCoordinates[i][1]];
+            let C = board[winningCoordinates[i][2]];
+
+            // 1. Is spot not empty
+            // 2. Does Maker A = Marker B = Marker C
+            // If yes then game won
+            if (A !== ' ' && A === B && B === C) {
+                isWinner = true;
+                checkWinner(isWinner);
+            }
+        }
+        
+        // Check if TIE
+        if (!isWinner && totalMoves === currentMoves) {
+            checkWinner(isWinner);
+                console.log('Would you like to restart the game? y/n')
+                // if yes then reset board
+                // gameBoard.resetBoard();
         }
 
         function checkWinner(isWinner) {
