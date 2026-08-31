@@ -28,12 +28,11 @@ const printCurrentBoardState = () => {
     console.log(formattedBoard);
 }
 
-
-
 // Game Controller to handle player turns, reset game, win checks
 const gameController = (playerOne, playerTwo) => {
     const totalMoves = 9;
     let currentMoves = 0;
+    const board = gameBoard.getBoard();
     const winningCoordinates = [
         [0,1,2], // Row 0
         [3,4,5], // Row 1 
@@ -45,10 +44,13 @@ const gameController = (playerOne, playerTwo) => {
         [2,4,6]  // Row 7 - Diagonal Top left down right
     ];
     let isWinner = false;
-    let activePlayer = playerOne;
+    let activePlayer = playerOne; // Player one gets first move
+
+    const switchPlayer = () => {
+        activePlayer === playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
+    }
 
     const playTurn = (userChoice) => {
-        let board = gameBoard.getBoard();
         userChoice--; // To keep digits as 1-9 for user choice
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
@@ -88,17 +90,16 @@ const gameController = (playerOne, playerTwo) => {
         
         // Check if TIE
         if (!isWinner && totalMoves === currentMoves) {
-            checkWinner(isWinner);
-                console.log('Game was a Tie!');
-                return;
-                // if yes then reset board
-                // gameBoard.resetBoard();
+            console.log('Game was a Tie!');
+            return;
+            // if yes then reset board
+            // gameBoard.resetBoard();
         }
+
+        // Switch player if game is still going
+        switchPlayer(activePlayer);
     }
 
-    const switchPlayer = () => {
-        // activePlayer;
-    }
 
     // Ask if to restart game or end game to end loop
     return {
@@ -127,7 +128,16 @@ const gameInstructions = () => {
 
     /* Play game */
     game.playTurn(2);
+    game.playTurn(3);
+    game.playTurn(7);
+    game.playTurn(1);
+    game.playTurn(2);
+    game.playTurn(9);
+    game.playTurn(8);
+    game.playTurn(6);
+    game.playTurn(4);
+    game.playTurn(5);
 })();
 
 
-// TODO: how to set up players swaps, then how to pass in user choice with hard coding? I think it'll be left to be done in front end other wise I would call the functions with the user choices for now
+// TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
