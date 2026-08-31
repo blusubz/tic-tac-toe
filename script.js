@@ -41,7 +41,6 @@ const printCurrentBoardState = () => {
 const gameController = () => {
     const totalMoves = 9;
     let currentMoves = 0;
-    let computerTurnSwtich = 0;
     const winningCoordinates = [
         [0,1,2], // Row 0
         [3,4,5], // Row 1 
@@ -52,73 +51,66 @@ const gameController = () => {
         [0,4,8], // Row 6 - Diagonal Top right down left
         [2,4,6]  // Row 7 - Diagonal Top left down right
     ];
-    const markerX = 'X';
-    const markerO = 'O';
     let isWinner = false;
     let board = gameBoard.getBoard();
-    // let userChoice = 4;
+    let userChoice = 9;
+    let marker = 'X';
+    userChoice--; // To keep digits as 1-9 for user choice
+
+    const playTurn = () => {
+        return;
+    }
+
+    /* If game is over, stop game */ 
+    if (isWinner || totalMoves === currentMoves) {
+        console.log("Game is over. Restart game to play again.");
+        return;
+    }
     
-
-    //userChoice--; // To allow user choice be digits 1-9, so we subtract 1 from user choice to index into board arr correctly 
-    
-    /* Game logic for play */
-    // Create loop to let computer play on it's own
-    while (currentMoves < totalMoves && !isWinner) {
-        let computerChoice = Math.floor(Math.random() * 9);
+    // Logic to check if user choice spot not empty
+    if (board[userChoice] !== ' ') { 
+        console.log('Spot taken. Please select another position choice.');
+        return;
+    } 
         
-        const computer1 = 'X';
-        const computer2 = 'O';
-        // If total moves reached without winner, then Game is tie
-        
-        // Logic to check if user choice is taken by oppenents marker
-        if (board[computerChoice] === ' ') { 
-            if (computerTurnSwtich % 2 === 0) {
-                console.log('computer 1 turn')
-                gameBoard.setBoard(computerChoice, computer1)
-            }  else {
-                console.log('computer 2 turn')
-                gameBoard.setBoard(computerChoice, computer2)
-            }
-            computerTurnSwtich++;
-            currentMoves++;
-            printCurrentBoardState();
-        } else {
-            console.log('Spot taken. Please select another position choice.');
-        } 
 
-        // Calculate winner
-        for (let i = 0; i < winningCoordinates.length; i++) {
-            let A = board[winningCoordinates[i][0]];
-            let B = board[winningCoordinates[i][1]];
-            let C = board[winningCoordinates[i][2]];
+    gameBoard.setBoard(userChoice, marker);
+    currentMoves++;
+    printCurrentBoardState();
 
-            // 1. Is spot not empty
-            // 2. Does Maker A = Marker B = Marker C
-            // If yes then game won
-            if (A !== ' ' && A === B && B === C) {
-                isWinner = true;
-                checkWinner(isWinner);
-            }
-        }
-        
-        // Check if TIE
-        if (!isWinner && totalMoves === currentMoves) {
+    // Calculate winner
+    for (let i = 0; i < winningCoordinates.length; i++) {
+        let A = board[winningCoordinates[i][0]];
+        let B = board[winningCoordinates[i][1]];
+        let C = board[winningCoordinates[i][2]];
+
+        // 1. Is spot not empty
+        // 2. Does Maker A = Marker B = Marker C
+        // If yes then game won
+        if (A !== ' ' && A === B && B === C) {
+            isWinner = true;
             checkWinner(isWinner);
-                console.log('Would you like to restart the game? y/n')
-                // if yes then reset board
-                // gameBoard.resetBoard();
-        }
-
-        function checkWinner(isWinner) {
-            if (isWinner) {
-                console.log(`Congratulations! You are the winner!`);
-                throw new Error("Game over: stopping execution!");
-            } else {
-                console.log(`Game was a tie!`);
-                throw new Error("Game was a tie: stopping execution!");
-            }
         }
     }
+    
+    // Check if TIE
+    if (!isWinner && totalMoves === currentMoves) {
+        checkWinner(isWinner);
+            console.log('Would you like to restart the game? y/n')
+            // if yes then reset board
+            // gameBoard.resetBoard();
+    }
+
+    function checkWinner(isWinner) {
+        if (isWinner) {
+            console.log(`Congratulations! You are the winner!`);
+            return;
+        } else {
+            console.log(`Game was a tie!`);
+            return;
+        }
+    }
+
     // Ask if to restart game or end game to end loop
 }
 
@@ -134,5 +126,3 @@ const gameController = () => {
     // Play game
     gameController();
 })();
-
-
