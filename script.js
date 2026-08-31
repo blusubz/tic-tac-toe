@@ -38,7 +38,7 @@ const printCurrentBoardState = () => {
 
 
 // Game Controller to handle player turns, reset game, win checks
-const gameController = () => {
+const gameController = (playerOne, playerTwo) => {
     const totalMoves = 9;
     let currentMoves = 0;
     const winningCoordinates = [
@@ -52,66 +52,66 @@ const gameController = () => {
         [2,4,6]  // Row 7 - Diagonal Top left down right
     ];
     let isWinner = false;
-    let board = gameBoard.getBoard();
-    let userChoice = 9;
     let marker = 'X';
-    userChoice--; // To keep digits as 1-9 for user choice
+    let activePlayer = playerOne;
 
-    const playTurn = () => {
-        return;
-    }
-
-    /* If game is over, stop game */ 
-    if (isWinner || totalMoves === currentMoves) {
-        console.log("Game is over. Restart game to play again.");
-        return;
-    }
-    
-    // Logic to check if user choice spot not empty
-    if (board[userChoice] !== ' ') { 
-        console.log('Spot taken. Please select another position choice.');
-        return;
-    } 
+    const playTurn = (userChoice) => {
+        let board = gameBoard.getBoard();
+        userChoice--; // To keep digits as 1-9 for user choice
+        /* If game is over, stop game */ 
+        if (isWinner || totalMoves === currentMoves) {
+            console.log("Game is over. Restart game to play again.");
+            return;
+        }
         
+        // Logic to check if user choice spot not empty
+        if (board[userChoice] !== ' ') { 
+            console.log('Spot taken. Please select another position choice.');
+            return;
+        } 
+        gameBoard.setBoard(userChoice, activePlayer.marker);
+        currentMoves++;
+        printCurrentBoardState();
 
-    gameBoard.setBoard(userChoice, marker);
-    currentMoves++;
-    printCurrentBoardState();
+        // Calculate winner
+        for (let i = 0; i < winningCoordinates.length; i++) {
+            let A = board[winningCoordinates[i][0]];
+            let B = board[winningCoordinates[i][1]];
+            let C = board[winningCoordinates[i][2]];
 
-    // Calculate winner
-    for (let i = 0; i < winningCoordinates.length; i++) {
-        let A = board[winningCoordinates[i][0]];
-        let B = board[winningCoordinates[i][1]];
-        let C = board[winningCoordinates[i][2]];
-
-        // 1. Is spot not empty
-        // 2. Does Maker A = Marker B = Marker C
-        // If yes then game won
-        if (A !== ' ' && A === B && B === C) {
-            isWinner = true;
-            checkWinner(isWinner);
+            // 1. Is spot not empty
+            // 2. Does Maker A = Marker B = Marker C
+            // If yes then game won
+            if (A !== ' ' && A === B && B === C) {
+                isWinner = true;
+                break;
+            }
         }
-    }
-    
-    // Check if TIE
-    if (!isWinner && totalMoves === currentMoves) {
-        checkWinner(isWinner);
-            console.log('Would you like to restart the game? y/n')
-            // if yes then reset board
-            // gameBoard.resetBoard();
-    }
 
-    function checkWinner(isWinner) {
+        // Annouce player winner
         if (isWinner) {
-            console.log(`Congratulations! You are the winner!`);
-            return;
-        } else {
-            console.log(`Game was a tie!`);
+            console.log(`Congratulations ${activePlayer.name}! You win!`);
             return;
         }
+        
+        // Check if TIE
+        if (!isWinner && totalMoves === currentMoves) {
+            checkWinner(isWinner);
+                console.log('Game was a Tie!');
+                return;
+                // if yes then reset board
+                // gameBoard.resetBoard();
+        }
+    }
+
+    const switchPlayer = () => {
+        // activePlayer;
     }
 
     // Ask if to restart game or end game to end loop
+    return {
+        playTurn, switchPlayer
+    };
 }
 
 // Game flow Driver
@@ -122,7 +122,17 @@ const gameController = () => {
     // Game Manual
     const visualBoard = "\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n\n"; // later do index - 1
     console.log(visualBoard);
+    // TODO:
+    // 1. create player1, player 2
+    
+    const playerOne = player('Morris', 'X');
+    const playerTwo = player('Computer', 'O');
+
+    const game = gameController(playerOne, playerTwo);
+
+    
+    // 2. call gameController.playTurn with player info to play turn
 
     // Play game
-    gameController();
+    game.playTurn(8);
 })();
