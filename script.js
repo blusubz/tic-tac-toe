@@ -4,7 +4,7 @@ const gameBoard = (() => {
     let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
  
     const resetBoard = () =>  { 
-        board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+        board.fill(' ');
     }
   
     const getBoard = () => board;
@@ -17,23 +17,15 @@ const gameBoard = (() => {
 })();
 
 // Player Factory Function
-// function player(name, marker) {
-//     return {
-//         name,
-//         marker,
-//         userChoice
-//     };
-// };
-
 const player = (name, marker) => ({ name, marker })
 
 // Print current state of board to screen 
 const printCurrentBoardState = () => {
     let board = gameBoard.getBoard();
-    const formattedBoard = `${board[0]} | ${board[1]} | ${board[2]}\n--+---+--\n${board[3]} | ${board[4]} | ${board[5]}\n--+---+--\n${board[6]} | ${board[7]} | ${board[8]}`
+    const formattedBoard = `${board[0]} | ${board[1]} | ${board[2]}\n--+---+--\n${board[3]} | ${board[4]} | ${board[5]}\n--+---+--\n${board[6]} | ${board[7]} | ${board[8]}`;
 
     // Print current board state
-    console.log(formattedBoard)
+    console.log(formattedBoard);
 }
 
 
@@ -53,7 +45,6 @@ const gameController = (playerOne, playerTwo) => {
         [2,4,6]  // Row 7 - Diagonal Top left down right
     ];
     let isWinner = false;
-    let marker = 'X';
     let activePlayer = playerOne;
 
     const playTurn = (userChoice) => {
@@ -128,15 +119,15 @@ const gameInstructions = () => {
 (() => {
     // Game start w/ Instructions in terminal
     gameInstructions();
-    
-    // 1. create player1, player 2
+
+    /* Set up game and the players */
     const playerOne = player('Morris', 'X');
     const playerTwo = player('Computer', 'O');
-
     const game = gameController(playerOne, playerTwo);
 
     /* Play game */
-    
-    // 2. call gameController.playTurn with player info to play turn
     game.playTurn(2);
 })();
+
+
+// TODO: how to set up players swaps, then how to pass in user choice with hard coding? I think it'll be left to be done in front end other wise I would call the functions with the user choices for now
