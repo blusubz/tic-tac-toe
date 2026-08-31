@@ -115,25 +115,28 @@ const gameController = (playerOne, playerTwo) => {
     };
 }
 
-// Game flow Driver
-(() => {
+const gameInstructions = () => {
     // Start game instructions
     console.log('This is a visual representation of Tic-Tac-Toe board.\n\nPlease select your marker to use it.\n\nInput the digit where you would want to place your marker.')
 
     // Game Manual
     const visualBoard = "\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n\n"; // later do index - 1
     console.log(visualBoard);
-    // TODO:
-    // 1. create player1, player 2
+}
+
+// Game flow Driver
+(() => {
+    // Game start w/ Instructions in terminal
+    gameInstructions();
     
+    // 1. create player1, player 2
     const playerOne = player('Morris', 'X');
     const playerTwo = player('Computer', 'O');
 
     const game = gameController(playerOne, playerTwo);
 
+    /* Play game */
     
     // 2. call gameController.playTurn with player info to play turn
-
-    // Play game
-    game.playTurn(1);
+    game.playTurn(2);
 })();
