@@ -117,7 +117,15 @@ const gameInstructions = () => {
 }
 
 // Game flow Driver
-(() => {
+// (() => {
+
+// })();
+
+
+
+// DOM hanlder
+function ScreenController() {
+
     // Game start w/ Instructions in terminal
     gameInstructions();
 
@@ -137,7 +145,13 @@ const gameInstructions = () => {
     game.playTurn(6);
     game.playTurn(4);
     game.playTurn(5);
-})();
+
+    function clickHandlerBoard(event) {
+        return;
+    }
+}
+
+ScreenController();
 
 
 // TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
