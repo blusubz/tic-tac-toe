@@ -7,7 +7,7 @@
 }
 
 body {
-    color: green;
+    color: rgb(19, 36, 226);
     background-color: black;
 
     /* Remove later */
@@ -24,10 +24,11 @@ body {
     width: 700px;
     height: 700px;
     color: aqua;
-    background-color: purple;
-    border: 2px solid rebeccapurple;
+    background-color: rgb(19, 36, 226);
+    border: 3px solid rebeccapurple;
+
 }
 
-.slot {
-    border: 2px solid white;
+.slot-selection {
+    border: 2px solid rgb(155, 28, 246);
 }
