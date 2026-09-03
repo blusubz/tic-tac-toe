@@ -63,6 +63,8 @@ const gameController = (playerOne, playerTwo) => {
             console.log('Spot taken. Please select another position choice.');
             return;
         } 
+
+        // Otherwise, Add marker to selected spot 
         gameBoard.setBoard(userChoice, activePlayer.marker);
         currentMoves++;
         printCurrentBoardState();
@@ -97,7 +99,7 @@ const gameController = (playerOne, playerTwo) => {
         }
 
         // Switch player if game is still going
-        switchPlayer(activePlayer);
+        switchPlayer();
     }
 
 
@@ -146,12 +148,19 @@ function ScreenController() {
     game.playTurn(4);
     game.playTurn(5);
 
+    // Perhaps set click event on the cells and once clicked call game.PlayTurn(cell value) once that is processed update Board then call game.PlayTurn(computer random index). Let the game play out
+
     function clickHandlerBoard(event) {
         return;
     }
+
+    // Event button for player marker selection and name
+
+    // Event for submitting player info and storing it for player object 
 }
 
 ScreenController();
 
 
 // TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
+// 1. Create button to start game, maybe add event listener that runs the ScreenController once it's clicked which then allows for the player name button

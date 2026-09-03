@@ -21,14 +21,17 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 
-    width: 700px;
-    height: 700px;
+    width: 650px;
+    height: 650px;
     color: aqua;
     background-color: rgb(19, 36, 226);
-    border: 3px solid rebeccapurple;
-
+    gap: 7px;
 }
 
-.slot-selection {
-    border: 2px solid rgb(155, 28, 246);
+.cell-selection {
+    background-color: rgb(155, 28, 246);
+}
+
+.cell-selection:hover {
+    cursor: pointer;
 }
