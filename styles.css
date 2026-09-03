@@ -15,7 +15,7 @@
 }
 
 body {
-    color: rgb(19, 36, 226);
+    color: var(--board-frame);
     background-color: black;
 
     /* Remove later */
