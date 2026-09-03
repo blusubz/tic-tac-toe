@@ -6,12 +6,12 @@
     box-sizing: border-box;
 }
 
-/* Theme for game is Wooden (Classic Walnut & Birch) */
+/* Theme for game is Wooden (Mid-Century Oak & Maple) */
 :root {
     --board-frame: #8D5B4C;
-    --slot-selection: #F5EBE0;
-    --slot-selection-hover: #D7CCC8;
-    --markers: #231510;
+    --slot-selection: #EED7C5;
+    --slot-selection-hover: #E4C5B3;
+    --markers: #4A2810;
 }
 
 body {
