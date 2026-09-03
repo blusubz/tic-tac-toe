@@ -31,6 +31,22 @@ body {
     gap: 10px;
 }
 
+.container div:nth-child(1) {
+    border-top-left-radius: 15px;
+}
+
+.container div:nth-child(3) {
+    border-top-right-radius: 20px;
+}
+
+.container div:nth-child(7) {
+    border-bottom-left-radius: 20px;
+}
+
+.container div:nth-child(9) {
+    border-bottom-right-radius: 20px;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -44,11 +60,12 @@ body {
     /* text-align: center; */
     background-color: var(--board-frame);
     gap: 7px;
+    border-radius: 20px 20px;
 }
 
 .cell-selection {
-    display: grid;
-    place-items: center;
+    display: grid; /* To target marker in cell*/
+    place-items: center; /* To center marker in cell*/
 
     font-size: 150px;
 
