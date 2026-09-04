@@ -156,5 +156,23 @@ function ScreenController() {
 ScreenController();
 
 
+const modal = document.getElementById('myModal');
+const openBtn = document.getElementById('openModal');
+const closeBtn = document.getElementById('closeModal');
+
+// Open modal as a backdrop overlay
+openBtn.addEventListener('click', () => {
+    modal.showModal();
+});
+
+// Close the modal
+closeBtn.addEventListener('click', () => {
+    modal.close();
+});
+
 // TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
 // 1. Create button to start game, maybe add event listener that runs the ScreenController once it's clicked which then allows for the player name button
+
+// First complete all logic, then finish styling the game please
+
+// Make sure to block clicks on board until modal is submitted (player name, and marker selections)
