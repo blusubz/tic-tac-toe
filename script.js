@@ -43,6 +43,8 @@ const GameController = (playerOne, playerTwo) => {
         activePlayer === playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
     }
 
+    const getWinner = () => isWinner === true ? activePlayer : null;
+
     const playTurn = (userChoice) => {
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
@@ -74,12 +76,6 @@ const GameController = (playerOne, playerTwo) => {
                 break;
             }
         }
-
-        // Announce player winner
-        if (isWinner) {
-            console.log(`Congratulations ${activePlayer.name}! You win!`);
-            return;
-        }
         
         // Check if TIE
         if (!isWinner && totalMoves === currentMoves) {
@@ -90,31 +86,18 @@ const GameController = (playerOne, playerTwo) => {
         }
 
         // Switch player if game is still going
-        switchPlayer();
+        if (isWinner) { return }
+        else { switchPlayer(); }
     }
-
 
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer, getActivePlayer
+        playTurn, switchPlayer, getActivePlayer, getWinner
     };
-}
-
-const gameInstructions = () => {
-    // Start game instructions
-    console.log('This is a visual representation of Tic-Tac-Toe board.\n\nPlease select your marker to use it.\n\nInput the digit where you would want to place your marker.')
-
-    // Game Manual
-    const visualBoard = "\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9\n\n"; // later do index - 1
-    console.log(visualBoard);
 }
 
 // DOM handler
 function ScreenController() {
-
-    // Game start w/ Instructions in terminal
-    gameInstructions();
-
     /* Set up game and the players */
     const playerOne = Player('Morris', 'X');
     const playerTwo = Player('Computer', 'O');
@@ -125,18 +108,22 @@ function ScreenController() {
     const cellElements = document.querySelectorAll('.cell-selection');
 
     const updateScreen = () => {
-
         // get the newest state of the board and player turn
         const board = gameBoard.getBoard();
         const activePlayer = game.getActivePlayer();
-
-        // display players turn
-        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        const winner = game.getWinner();
 
         // render current board 
         cellElements.forEach((cell, index) => {
             cell.textContent = board[index];
         });
+
+
+        if (winner) {
+            playerTurnDiv.textContent = `Congratulations ${winner.name}, you win!`;
+        } else {
+            playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        }        
     }
 
     function clickHandlerBoard(event) {
