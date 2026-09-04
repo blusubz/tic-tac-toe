@@ -20,16 +20,16 @@ const gameBoard = (() => {
 const player = (name, marker) => ({ name, marker })
 
 // Print current state of board to screen 
-const printCurrentBoardState = () => {
-    let board = gameBoard.getBoard();
-    const formattedBoard = `${board[0]} | ${board[1]} | ${board[2]}\n--+---+--\n${board[3]} | ${board[4]} | ${board[5]}\n--+---+--\n${board[6]} | ${board[7]} | ${board[8]}`;
+// const printCurrentBoardState = () => {
+//     let board = gameBoard.getBoard();
+//     const formattedBoard = `${board[0]} | ${board[1]} | ${board[2]}\n--+---+--\n${board[3]} | ${board[4]} | ${board[5]}\n--+---+--\n${board[6]} | ${board[7]} | ${board[8]}`;
 
-    // Print current board state
-    console.log(formattedBoard);
-}
+//     // Print current board state
+//     console.log(formattedBoard);
+// }
 
 // Game Controller to handle player turns, reset game, win checks
-const gameController = (playerOne, playerTwo) => {
+const GameController = (playerOne, playerTwo) => {
     const totalMoves = 9;
     let currentMoves = 0;
     const board = gameBoard.getBoard();
@@ -46,12 +46,13 @@ const gameController = (playerOne, playerTwo) => {
     let isWinner = false;
     let activePlayer = playerOne; // Player one gets first move
 
+    const getActivePlayer = () => activePlayer;
+
     const switchPlayer = () => {
         activePlayer === playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
     }
 
     const playTurn = (userChoice) => {
-        userChoice--; // To keep digits as 1-9 for user choice
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
             console.log("Game is over. Restart game to play again.");
@@ -84,7 +85,7 @@ const gameController = (playerOne, playerTwo) => {
             }
         }
 
-        // Annouce player winner
+        // Announce player winner
         if (isWinner) {
             console.log(`Congratulations ${activePlayer.name}! You win!`);
             return;
@@ -105,7 +106,7 @@ const gameController = (playerOne, playerTwo) => {
 
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer
+        playTurn, switchPlayer, getActivePlayer
     };
 }
 
@@ -125,7 +126,7 @@ const gameInstructions = () => {
 
 
 
-// DOM hanlder
+// DOM handler
 function ScreenController() {
 
     // Game start w/ Instructions in terminal
@@ -134,29 +135,66 @@ function ScreenController() {
     /* Set up game and the players */
     const playerOne = player('Morris', 'X');
     const playerTwo = player('Computer', 'O');
-    const game = gameController(playerOne, playerTwo);
+    const game = GameController(playerOne, playerTwo);
+
+    const playerTurnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('.board');
+    const cellElements = document.querySelectorAll('.cell-selection');
+
+    const updateScreen = () => {
+
+        // get the newest state of the board and player turn
+        const board = gameBoard.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        // display players turn
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+        // render current board 
+        cellElements.forEach((cell, index) => {
+            cell.textContent = board[index];
+        });
+    }
 
     /* Play game */
-    game.playTurn(2);
-    game.playTurn(3);
-    game.playTurn(7);
-    game.playTurn(1);
-    game.playTurn(2);
-    game.playTurn(9);
-    game.playTurn(8);
-    game.playTurn(6);
-    game.playTurn(4);
-    game.playTurn(5);
+    // game.playTurn(2);
+    // game.playTurn(3);
+    // game.playTurn(7);
+    // game.playTurn(1);
+    // game.playTurn(2);
+    // game.playTurn(9);
+    // game.playTurn(8);
+    // game.playTurn(6);
+    // game.playTurn(4);
+    // game.playTurn(5);
 
     // Perhaps set click event on the cells and once clicked call game.PlayTurn(cell value) once that is processed update Board then call game.PlayTurn(computer random index). Let the game play out
 
+
+
     function clickHandlerBoard(event) {
-        return;
+        // Get the ID string from the clicked slot element
+        const selectedSlotID = event.target.id;
+
+        // Prevent slots already taken or empty areas such as background
+        if (!selectedSlotID) return;
+
+        // Convert string from id='8' into the number 8 for the array reference
+        const slotIndex = Number(selectedSlotID);
+
+        game.playTurn(slotIndex);
+        updateScreen();
     }
+
+    boardDiv.addEventListener('click', clickHandlerBoard);
 
     // Event button for player marker selection and name
 
     // Event for submitting player info and storing it for player object 
+
+
+    // Run onces to draw the initial empty board and show who's turn it is
+    updateScreen();
 }
 
 ScreenController();
