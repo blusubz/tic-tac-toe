@@ -12,11 +12,19 @@
     --slot-selection: #EED7C5;
     --slot-selection-hover: #E4C5B3;
     --markers: #4A2810;
+
+    /* Page Colors for body selector */
+    --bg-outer:  #1A110B;
+    --bg-inner: #3D291C;
+
 }
 
 body {
-    color: var(--board-frame);
-    background-color: black;
+    color: var(--slot-selection);
+    background: radial-gradient(
+        circle, 
+        var(--bg-inner) 0%, 
+        var(--bg-outer) 100%);
 
     /* Remove later */
     display: flex;
