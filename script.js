@@ -17,16 +17,7 @@ const gameBoard = (() => {
 })();
 
 // Player Factory Function
-const player = (name, marker) => ({ name, marker })
-
-// Print current state of board to screen 
-// const printCurrentBoardState = () => {
-//     let board = gameBoard.getBoard();
-//     const formattedBoard = `${board[0]} | ${board[1]} | ${board[2]}\n--+---+--\n${board[3]} | ${board[4]} | ${board[5]}\n--+---+--\n${board[6]} | ${board[7]} | ${board[8]}`;
-
-//     // Print current board state
-//     console.log(formattedBoard);
-// }
+const Player = (name, marker) => ({ name, marker })
 
 // Game Controller to handle player turns, reset game, win checks
 const GameController = (playerOne, playerTwo) => {
@@ -68,7 +59,6 @@ const GameController = (playerOne, playerTwo) => {
         // Otherwise, Add marker to selected spot 
         gameBoard.setBoard(userChoice, activePlayer.marker);
         currentMoves++;
-        printCurrentBoardState();
 
         // Calculate winner
         for (let i = 0; i < winningCoordinates.length; i++) {
@@ -119,13 +109,6 @@ const gameInstructions = () => {
     console.log(visualBoard);
 }
 
-// Game flow Driver
-// (() => {
-
-// })();
-
-
-
 // DOM handler
 function ScreenController() {
 
@@ -133,8 +116,8 @@ function ScreenController() {
     gameInstructions();
 
     /* Set up game and the players */
-    const playerOne = player('Morris', 'X');
-    const playerTwo = player('Computer', 'O');
+    const playerOne = Player('Morris', 'X');
+    const playerTwo = Player('Computer', 'O');
     const game = GameController(playerOne, playerTwo);
 
     const playerTurnDiv = document.querySelector('.turn');
@@ -156,22 +139,6 @@ function ScreenController() {
         });
     }
 
-    /* Play game */
-    // game.playTurn(2);
-    // game.playTurn(3);
-    // game.playTurn(7);
-    // game.playTurn(1);
-    // game.playTurn(2);
-    // game.playTurn(9);
-    // game.playTurn(8);
-    // game.playTurn(6);
-    // game.playTurn(4);
-    // game.playTurn(5);
-
-    // Perhaps set click event on the cells and once clicked call game.PlayTurn(cell value) once that is processed update Board then call game.PlayTurn(computer random index). Let the game play out
-
-
-
     function clickHandlerBoard(event) {
         // Get the ID string from the clicked slot element
         const selectedSlotID = event.target.id;
@@ -189,9 +156,6 @@ function ScreenController() {
     boardDiv.addEventListener('click', clickHandlerBoard);
 
     // Event button for player marker selection and name
-
-    // Event for submitting player info and storing it for player object 
-
 
     // Run onces to draw the initial empty board and show who's turn it is
     updateScreen();
