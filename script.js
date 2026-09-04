@@ -35,6 +35,7 @@ const GameController = (playerOne, playerTwo) => {
         [2,4,6]  // Row 7 - Diagonal Top left down right
     ];
     let isWinner = false;
+    let isTie = false;
     let activePlayer = playerOne; // Player one gets first move
 
     const getActivePlayer = () => activePlayer;
@@ -44,6 +45,8 @@ const GameController = (playerOne, playerTwo) => {
     }
 
     const getWinner = () => isWinner === true ? activePlayer : null;
+
+    const getIsTie = () => isTie === true ? true : false;
 
     const playTurn = (userChoice) => {
         /* If game is over, stop game */ 
@@ -79,8 +82,7 @@ const GameController = (playerOne, playerTwo) => {
         
         // Check if TIE
         if (!isWinner && totalMoves === currentMoves) {
-            console.log('Game was a Tie!');
-            return;
+            isTie = true;
             // if yes then reset board
             // gameBoard.resetBoard();
         }
@@ -92,7 +94,7 @@ const GameController = (playerOne, playerTwo) => {
 
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer, getActivePlayer, getWinner
+        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie
     };
 }
 
@@ -112,15 +114,18 @@ function ScreenController() {
         const board = gameBoard.getBoard();
         const activePlayer = game.getActivePlayer();
         const winner = game.getWinner();
+        const isTie = game.getIsTie();
 
         // render current board 
         cellElements.forEach((cell, index) => {
             cell.textContent = board[index];
         });
 
-
+        // Check for winner, if tie game or print next players name
         if (winner) {
             playerTurnDiv.textContent = `Congratulations ${winner.name}, you win!`;
+        } else if (isTie) {
+            playerTurnDiv.textContent = 'Game is a tie! Cat wins!'
         } else {
             playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
         }        
