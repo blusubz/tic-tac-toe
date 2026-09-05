@@ -1,7 +1,7 @@
 // Immediate Invoked Function Expression (IIFEs)
 const gameBoard = (() => {
     // Creates fresh board
-    let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+    let board = Array(9).fill(' ');
  
     const resetBoard = () =>  { 
         board.fill(' ');
@@ -36,7 +36,6 @@ const GameController = (playerOne, playerTwo) => {
     ];
     let isWinner = false;
     let isTie = false;
-    let isGameActive = false;
     let activePlayer = playerOne; // Player one gets first move
 
     const getActivePlayer = () => activePlayer;
@@ -48,8 +47,6 @@ const GameController = (playerOne, playerTwo) => {
     const getWinner = () => isWinner === true ? activePlayer : null;
 
     const getIsTie = () => isTie === true ? true : false;
-
-    const hasGameStarted = () => isGameActive === true ? true : false;
 
     const playTurn = (userChoice) => {
         // Set game to active
@@ -100,7 +97,7 @@ const GameController = (playerOne, playerTwo) => {
 
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie, hasGameStarted
+        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie
     };
 }
 
@@ -152,6 +149,7 @@ function ScreenController() {
 
         form.reset();
         dialog.close();
+        updateScreen();
     });
 
     const updateScreen = () => {
@@ -160,7 +158,6 @@ function ScreenController() {
         const activePlayer = game.getActivePlayer();
         const winner = game.getWinner();
         const isTie = game.getIsTie();
-        const isGameActive = game.hasGameStarted();
 
         // render current board 
         cellElements.forEach((cell, index) => {
@@ -202,7 +199,6 @@ function ScreenController() {
     boardDiv.addEventListener('click', clickHandlerBoard);
 
     // Run onces to draw the initial empty board and show who's turn it is
-    updateScreen();
 }
 
 ScreenController();
