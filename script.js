@@ -49,9 +49,6 @@ const GameController = (playerOne, playerTwo) => {
     const getIsTie = () => isTie === true ? true : false;
 
     const playTurn = (userChoice) => {
-        // Set game to active
-        isGameActive = true;
-
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
             console.log("Game is over. Restart game to play again.");
@@ -114,6 +111,7 @@ function ScreenController() {
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
     const cellElements = document.querySelectorAll('.cell-selection');
+    const restartText = document.querySelector('.restart-text');
 
     // Open modal as a backdrop overlay
     openBtn.addEventListener('click', () => {
@@ -167,8 +165,10 @@ function ScreenController() {
         // Check for winner, if tie game or print next players name
         if (winner) {
             playerTurnDiv.textContent = `Congratulations ${winner.name}, you win!`;
+            restartText.textContent = 'Click the restart button to play again.';
         } else if (isTie) {
-            playerTurnDiv.textContent = 'Game is a tie! Cat wins!'
+            playerTurnDiv.textContent = 'Game is a tie! Cat wins!';
+            restartText.textContent = 'Click the restart button to play again.';
         } else {
             playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
         } 
