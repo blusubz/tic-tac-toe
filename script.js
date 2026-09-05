@@ -172,17 +172,12 @@ function ScreenController() {
         } else {
             playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
         } 
-
-        // else if (isGameActive) {
-        //     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
-        // } 
-
-        // else {
-        //     playerTurnDiv.textContent = 'Click Start to play.';
-        // }
     }
 
     function clickHandlerBoard(event) {
+        // If the game hasn't been instantiated yet, stop right there
+        if (!game) return;
+
         // Get the ID string from the clicked slot element
         const selectedSlotID = event.target.id;
 
@@ -206,5 +201,3 @@ ScreenController();
 
 // TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
 // 1. Create button to start game, maybe add event listener that runs the ScreenController once it's clicked which then allows for the player name button
-
-// Make sure to block clicks on board until modal is submitted (player name, and marker selections)
