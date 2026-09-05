@@ -130,35 +130,29 @@ function ScreenController() {
         const player1Name = document.getElementById('player1-name').value;
         const player2Name = document.getElementById('player2-name').value;
 
-        const markerX = document.getElementById('marker-x').value;
-        const markerO = document.getElementById('marker-o').value;
+        const markerX = document.getElementById('marker-x');
+        const markerO = document.getElementById('marker-o');
 
         let player1marker = '';
         let player2marker = '';
 
         // Assign checked marker to player1
         if (markerX.checked) {
-            player1marker = markerX;
-            player1marker = markerO;
+            player1marker = markerX.value;
+            player2marker = markerO.value;
         } else {
-            player1marker = markerO;
-            player2marker = markerX;
+            player1marker = markerO.value;
+            player2marker = markerX.value;
         }
 
         const playerOne = Player(player1Name, player1marker);
         const playerTwo = Player(player2Name, player2marker); 
-
-        console.log('playerOne is' + playerOne);
-        console.log('playerTwo is: ' + playerTwo);
 
         game = GameController(playerOne, playerTwo);
 
         form.reset();
         dialog.close();
     });
-
-
-
 
     const updateScreen = () => {
         // get the newest state of the board and player turn
