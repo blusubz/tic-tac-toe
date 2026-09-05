@@ -36,6 +36,7 @@ const GameController = (playerOne, playerTwo) => {
     ];
     let isWinner = false;
     let isTie = false;
+    let isGameActive = false;
     let activePlayer = playerOne; // Player one gets first move
 
     const getActivePlayer = () => activePlayer;
@@ -48,7 +49,12 @@ const GameController = (playerOne, playerTwo) => {
 
     const getIsTie = () => isTie === true ? true : false;
 
+    const hasGameStarted = () => isGameActive === true ? true : false;
+
     const playTurn = (userChoice) => {
+        // Set game to active
+        isGameActive = true;
+
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
             console.log("Game is over. Restart game to play again.");
@@ -94,20 +100,65 @@ const GameController = (playerOne, playerTwo) => {
 
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie
+        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie, hasGameStarted
     };
 }
 
 // DOM handler
 function ScreenController() {
     /* Set up game and the players */
-    const playerOne = Player('Morris', 'X');
-    const playerTwo = Player('Computer', 'O');
-    const game = GameController(playerOne, playerTwo);
+    let game;
 
+    const dialog = document.getElementById('dialog');
+    const openBtn = document.getElementById('openModal');
+
+    const form = document.getElementById('player-inputs');
+    
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
     const cellElements = document.querySelectorAll('.cell-selection');
+
+    // Open modal as a backdrop overlay
+    openBtn.addEventListener('click', () => {
+        dialog.showModal();
+    });
+
+    // Event listener for modal submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const player1Name = document.getElementById('player1-name').value;
+        const player2Name = document.getElementById('player2-name').value;
+
+        const markerX = document.getElementById('marker-x').value;
+        const markerO = document.getElementById('marker-o').value;
+
+        let player1marker = '';
+        let player2marker = '';
+
+        // Assign checked marker to player1
+        if (markerX.checked) {
+            player1marker = markerX;
+            player1marker = markerO;
+        } else {
+            player1marker = markerO;
+            player2marker = markerX;
+        }
+
+        const playerOne = Player(player1Name, player1marker);
+        const playerTwo = Player(player2Name, player2marker); 
+
+        console.log('playerOne is' + playerOne);
+        console.log('playerTwo is: ' + playerTwo);
+
+        game = GameController(playerOne, playerTwo);
+
+        form.reset();
+        dialog.close();
+    });
+
+
+
 
     const updateScreen = () => {
         // get the newest state of the board and player turn
@@ -115,6 +166,7 @@ function ScreenController() {
         const activePlayer = game.getActivePlayer();
         const winner = game.getWinner();
         const isTie = game.getIsTie();
+        const isGameActive = game.hasGameStarted();
 
         // render current board 
         cellElements.forEach((cell, index) => {
@@ -128,7 +180,15 @@ function ScreenController() {
             playerTurnDiv.textContent = 'Game is a tie! Cat wins!'
         } else {
             playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
-        }        
+        } 
+
+        // else if (isGameActive) {
+        //     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        // } 
+
+        // else {
+        //     playerTurnDiv.textContent = 'Click Start to play.';
+        // }
     }
 
     function clickHandlerBoard(event) {
@@ -147,8 +207,6 @@ function ScreenController() {
 
     boardDiv.addEventListener('click', clickHandlerBoard);
 
-    // Event button for player marker selection and name
-
     // Run onces to draw the initial empty board and show who's turn it is
     updateScreen();
 }
@@ -156,23 +214,7 @@ function ScreenController() {
 ScreenController();
 
 
-const modal = document.getElementById('myModal');
-const openBtn = document.getElementById('openModal');
-const closeBtn = document.getElementById('closeModal');
-
-// Open modal as a backdrop overlay
-openBtn.addEventListener('click', () => {
-    modal.showModal();
-});
-
-// Close the modal
-closeBtn.addEventListener('click', () => {
-    modal.close();
-});
-
 // TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
 // 1. Create button to start game, maybe add event listener that runs the ScreenController once it's clicked which then allows for the player name button
-
-// First complete all logic, then finish styling the game please
 
 // Make sure to block clicks on board until modal is submitted (player name, and marker selections)

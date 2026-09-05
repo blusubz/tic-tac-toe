@@ -11,7 +11,7 @@
         <h1>Welcome to Tic-Tac-Toe</h1>
 
         <div class="container">
-            <h2 class="turn">Player turn...</h2>
+            <h2 class="turn"></h2>
             <div class="board">
                 <div class="cell-selection" id="0"></div>
                 <div class="cell-selection" id="1"></div>
@@ -25,34 +25,40 @@
             </div>
         </div>
 
-        <button id="openModal">Start Game</button>
+        <div class="game-btns-container">
+            <button id="openModal">Start Game</button>
 
-        <dialog id="myModal">
-            <h2>Player 1, enter your name and select marker:</h2>
-            <label>
-                Name
-                <input type="text" id="name" name="name">
-            </label>
+            <form method="dialog" id="player-inputs">
+                <dialog id="dialog">
+                    <h2>Player 1, enter your name and select marker:</h2>
+                    <label>
+                        Name
+                        <input type="text" id="player1-name">
+                    </label>
 
-            <fieldset>
-                <legend>Select your marker:</legend>
+                    <fieldset>
+                        <legend>Select your marker:</legend>
 
-                <label>
-                    <input type="radio" name="marker" value="x" checked>X
-                </label>
+                        <label>
+                            <input type="radio" id="marker-x" value="x" checked>X
+                        </label>
 
-                <label>
-                    <input type="radio" name="marker" value="o">O
-                </label>
-            </fieldset>
+                        <label>
+                            <input type="radio" id="marker-o" value="o">O
+                        </label>
+                    </fieldset>
 
-            <h2>Player 2, enter your name:</h2>
-            <label>
-                Name
-                <input type="text" id="player2id" name="player2name">
-            </label>
-            <button id="closeModal">Submit</button>
-        </dialog>
+                    <h2>Player 2, enter your name:</h2>
+                    <label>
+                        Name
+                        <input type="text" id="player2-name">
+                    </label>
+                    <button type="submit" id="submitBtn">Submit</button>
+                </dialog>
+            </form>
+
+            <button>Restart Game</button>
+        </div>
         <script src="script.js" defer></script>
     </body>
 </html>
