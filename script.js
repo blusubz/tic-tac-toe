@@ -210,7 +210,3 @@ function ScreenController() {
 }
 
 ScreenController();
-
-// TODO:
-// 1. Create and implement restart button 
-// 2. Make sure everything works and considered project finished 
