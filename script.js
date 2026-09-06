@@ -51,13 +51,11 @@ const GameController = (playerOne, playerTwo) => {
     const playTurn = (userChoice) => {
         /* If game is over, stop game */ 
         if (isWinner || totalMoves === currentMoves) {
-            console.log("Game is over. Restart game to play again.");
             return;
         }
         
         // Logic to check if user choice spot not empty
         if (board[userChoice] !== ' ') { 
-            console.log('Spot taken. Please select another position choice.');
             return;
         } 
 
@@ -92,9 +90,17 @@ const GameController = (playerOne, playerTwo) => {
         else { switchPlayer(); }
     }
 
+    const restartGame = () => {
+        currentMoves = 0;
+        isWinner = false;
+        isTie = false;
+        activePlayer = playerOne;
+        gameBoard.resetBoard();
+    };
+
     // Ask if to restart game or end game to end loop
     return {
-        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie
+        playTurn, switchPlayer, getActivePlayer, getWinner, getIsTie, restartGame
     };
 }
 
@@ -111,7 +117,15 @@ function ScreenController() {
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
     const cellElements = document.querySelectorAll('.cell-selection');
+
     const restartText = document.querySelector('.restart-text');
+    const restartGameBtn = document.getElementById('restartBtn');
+
+    restartGameBtn.addEventListener('click', () => {
+        dialog.showModal();
+        game.restartGame();
+        // restartText.textContent = '';
+    });
 
     // Open modal as a backdrop overlay
     openBtn.addEventListener('click', () => {
@@ -121,6 +135,7 @@ function ScreenController() {
     // Event listener for modal submission
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        restartText.textContent = '';
 
         const player1Name = document.getElementById('player1-name').value;
         const player2Name = document.getElementById('player2-name').value;
@@ -165,10 +180,10 @@ function ScreenController() {
         // Check for winner, if tie game or print next players name
         if (winner) {
             playerTurnDiv.textContent = `Congratulations ${winner.name}, you win!`;
-            restartText.textContent = 'Click the restart button to play again.';
+            restartText.textContent = 'Click the restart game button to play again.';
         } else if (isTie) {
             playerTurnDiv.textContent = 'Game is a tie! Cat wins!';
-            restartText.textContent = 'Click the restart button to play again.';
+            restartText.textContent = 'Click the restart game button to play again.';
         } else {
             playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
         } 
@@ -192,12 +207,10 @@ function ScreenController() {
     }
 
     boardDiv.addEventListener('click', clickHandlerBoard);
-
-    // Run onces to draw the initial empty board and show who's turn it is
 }
 
 ScreenController();
 
-
-// TODO: User choice is hardcoded in the driver. Next I will create front end to pass in user choice with button clicks
-// 1. Create button to start game, maybe add event listener that runs the ScreenController once it's clicked which then allows for the player name button
+// TODO:
+// 1. Create and implement restart button 
+// 2. Make sure everything works and considered project finished 
