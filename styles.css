@@ -17,6 +17,14 @@
     --bg-outer:  #1A110B;
     --bg-inner: #3D291C;
 
+    /* Button colors for Start Game & Restart Game */
+    --start-game: #22c55e;
+    --start-game-hover: #16a34a;
+    --start-game-text: white;
+    --restart-game: #f59e0b;
+    --restart-game-hover: #d97706;
+    --restart-game-text: white;
+
 }
 
 body {
@@ -60,8 +68,8 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 
-    width: 650px;
-    height: 650px;
+    width: 675px;
+    height: 675px;
 
     color: var(--markers);
     /* font-size: 150px; */
@@ -87,4 +95,40 @@ body {
 
 dialog {
     margin: auto;
+}
+
+.game-btns-container {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+}
+
+#openModal,
+#restartBtn {
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+#openModal {
+    background-color: var(--start-game);
+    color: var(--start-game-text);
+}
+
+#openModal:hover {
+    background-color: var(--start-game-hover);
+}
+
+#restartBtn {
+    background-color: var(--restart-game);
+    color: var(--restart-game-text);
+}
+
+#restartBtn:hover {
+    background-color: var(--restart-game-hover);
+}
+
+#openModal:hover,
+#restartBtn:hover {
+    cursor: pointer;
 }
