@@ -2,7 +2,9 @@
 
 A responsive, modular Tic-Tac-Toe web application built with vanilla JavaScript, featuring custom player setup and mid-century oak theme. 
 
-[🚀 View Live Demo](https://blusubz.github.io/tic-tac-toe/)
+[🚀 View Live Demo]()
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-🚀-blue?style=for-the-badge)](https://blusubz.github.io/tic-tac-toe/)
 
 ## 🎮 Features 
 - **Custom Player Setup:** Modal dialog for choosing custom names and initial markers ('X' or 'O').
