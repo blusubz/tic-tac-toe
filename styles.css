@@ -33,12 +33,13 @@ body {
         circle, 
         var(--bg-inner) 0%, 
         var(--bg-outer) 100%);
-
-    /* Remove later */
+    
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    justify-content: center;
+    padding: 1rem;
 }
 
 .container {
@@ -68,22 +69,21 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 
-    width: 675px;
-    height: 675px;
+    width: min(90vw, 500px);
+    aspect-ratio: 1 / 1; /* Keep board as a square */
 
     color: var(--markers);
-    /* font-size: 150px; */
-    /* text-align: center; */
     background-color: var(--board-frame);
     gap: 7px;
-    border-radius: 20px 20px;
+    border-radius: 20px;
 }
 
 .cell-selection {
     display: grid; /* To target marker in cell*/
     place-items: center; /* To center marker in cell*/
 
-    font-size: 150px;
+    font-size: clamp(2.5rem, 15vw, 8rem);
+    font-weight: bold;
 
     background-color: var(--slot-selection);
 }
@@ -95,6 +95,16 @@ body {
 
 dialog {
     margin: auto;
+    width: min(90vw, 400px);
+    border: none;
+    border-radius: 15px;
+    padding: 1.5rem;
+    background-color: var(--slot-selection);
+    color: var(--bg-outer);
+}
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
 }
 
 .game-btns-container {
@@ -105,9 +115,13 @@ dialog {
 
 #openModal,
 #restartBtn {
-    height: 30px;
-    width: 100px;
     border-radius: 10px;
+    min-height: 44px;
+    padding: 05.rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    transition: background-color 0.2s ease, transform 01.s ease;
 }
 
 #openModal {
@@ -131,4 +145,9 @@ dialog {
 #openModal:hover,
 #restartBtn:hover {
     cursor: pointer;
+}
+
+#openModal:active,
+#restartBtn:active {
+    transform: scale(0.96);
 }

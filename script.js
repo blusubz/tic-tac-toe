@@ -122,6 +122,7 @@ function ScreenController() {
     const restartGameBtn = document.getElementById('restartBtn');
 
     restartGameBtn.addEventListener('click', () => {
+        if (!game) return; // Doesn't trigger event if game no started 
         dialog.showModal();
         game.restartGame();
         // restartText.textContent = '';
